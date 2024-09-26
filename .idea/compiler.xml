@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="TypeScriptCompiler">
+    <option name="nodeInterpreterTextField" value="docker-compose://[//wsl.localhost/Ubuntu-22.04/home/z/projects/jaguar/docker-compose.yml]:frontend/node" />
+  </component>
+</project>

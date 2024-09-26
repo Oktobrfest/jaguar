@@ -1,0 +1,81 @@
+{% extends "base.html.j2" %}
+{% block title %} Home {%	endblock title %}
+{% block content %}
+
+	
+<main>
+{% if items == [] %}
+  <p style="margin-top: 20px; margin-bottom: 150px;">
+    <span style="color: #888; font-size: 14pt;">There are currently no streams running</span>
+  </p>
+{% endif %}
+{% for item in items %}
+<article>
+  <h1>{{ item[1] }}</h1>
+  <table>
+    <tbody>
+      <tr>
+        <th>Protocol</th>
+        <th>URL</th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <td>RTMP</td>
+        <td>
+          <input 
+            type="text" class="url" 
+            id="rtmp_{{ item [0] }}_{{ item [1] }}" 
+            value="rtmp://{{ configuration["rtmp_base"] }}/{{ item[0] }}/{{ item[1] }}"
+            readonly>
+        </td>
+        <td class="btn">
+          <button class="btn" onclick="copy_to_clipboard('rtmp_{{ item [0] }}_{{ item [1] }}')">Copy</button>
+        </td>
+        <td class="btn">
+          <a
+            style="width: 80px;"
+            href="rtmp://{{ configuration["rtmp_base"] }}/{{ item[0] }}/{{ item[1] }}"
+            class="btn btn-green">&#9654; RTMP</a>
+        </td>
+      </tr>
+      <tr>
+        <td>HTTP-FLV</td>
+	      <td>
+          <input 
+            type="text" class="url" 
+            id="flv_{{ item [0] }}_{{ item [1] }}" 
+            value="{{ configuration["web_proto"] }}://{{ configuration["base_url"] }}/flv?app={{ item[0] }}&stream={{ item[1] }}"
+            readonly>
+        </td>
+        <td class="btn">
+          <button class="btn" onclick="copy_to_clipboard('flv_{{ item [0] }}_{{ item [1] }}')">Copy</button>
+        </td>
+	      <td class="btn">
+          <a 
+            style="width: 80px;"
+            href="{{ configuration["web_proto"] }}://{{ configuration["base_url"] }}/flv?app={{ item[0] }}&stream={{ item[1] }}"
+            class="btn btn-green">&#9654; FLV</a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <a href="{{ url_for('frontend.show_player', streamname=item[1], appname=item[0]) }}"
+    class="btn-large btn-green">
+      &#9655; Web Player
+    </a>
+</article>
+{% endfor %}
+</main>
+<footer>
+{{ configuration["footer"] }}
+</footer>
+<script type="text/javascript">
+    function copy_to_clipboard(elem) {
+      textfield = document.getElementById(elem)
+      textfield.select()
+      navigator.clipboard.writeText(textfield.value)
+    }
+</script>
+
+{% endblock content %}

@@ -1,0 +1,140 @@
+networks:
+  cheetah-net:
+    driver: bridge
+    name: cheetah-net
+    ipam:
+      config:
+        - subnet: 10.11.0.0/16
+          gateway: 10.11.0.1
+  proxy-network:
+    external: true
+
+services:
+  auth:
+    # PSK Authentication Service
+    image: python:3
+    restart: no
+    user: nobody
+    command: python /app/auth.py
+    volumes:
+      - "./auth:/app"
+    # set the PSK Password for the Auth Daemon here
+    environment:
+      - password=test
+    networks:
+      cheetah-net:
+        ipv4_address: 10.11.0.2
+      proxy-network:
+        ipv4_address: 10.5.0.10
+    # jag_nginx:
+    #   build: ./doc-ngx/.
+    #   restart: no
+    #   networks:
+    #     cheetah-net:
+    #       ipv4_address: 10.11.0.3
+    #     proxy-network:
+    #       ipv4_address: 10.5.0.11
+    #   ports:
+    #     - "1935:1935"
+    #     - "9000:8080"
+    #   volumes:
+    #     - "./config/nginx-rtmp:/usr/local/nginx/conf:ro"
+    #     - "./rec:/video/rec"
+    #     - "./recunlisted:/video/recunlisted"
+    #     # - "./config/jag_nginx/rtmp:/usr/local/nginx/conf/rtmp"
+    #     # - "./config/jag_nginx/conf.d:/usr/local/nginx/conf/conf.d"
+    #     # - "./config/jag_nginx/nginx.conf:/usr/local/nginx/conf/nginx.conf"
+    #     # - "./config/jag_nginx/mime.types:/usr/local/nginx/conf/mime.types"
+    #     # - "./logs/error.log:/var/log/nginx/error.log"
+    #     # - "./logs/access.log:/var/log/nginx/access.log"
+    #     # - "./vid/rec:/video/rec"
+    #     # - "./vid/recunlisted:/video/recunlisted"
+    #   depends_on:
+    #     - auth
+    #     - jag
+    # entrypoint: [ "/usr/local/nginx/sbin/nginx" ]
+
+  jag:
+    build:
+      context: .
+      dockerfile: jag/Dockerfile
+      args:
+        USERNAME: z
+        USER_UID: 1000
+        USER_GID: 1000
+    user: 1000:1000
+    env_file: ./.env
+    networks:
+      cheetah-net:
+        ipv4_address: 10.11.0.4
+      proxy-network:
+        ipv4_address: 10.5.0.12
+    restart: no
+    environment:
+      - APP_PORT=${APP_PORT}
+      - DEBUG_PORT=${DEBUG_PORT}
+      - FLASK_APP=${FLASK_APP}
+      - FLASK_ENV=${FLASK_ENV}
+      - NODE_ENV=${NODE_ENV}
+      - FLASK_DEBUG=${FLASK_DEBUG}
+      - IDE=${IDE}
+      - PYDEV_DEBUG=IDE=${PYDEV_DEBUG}
+      - PYDEVD_DEBUG_FILE=${PYDEVD_DEBUG_FILE}
+    ports:
+      - '5020:5178'
+      - '${DEBUG_PORT}:${DEBUG_PORT}'
+      - '${APP_PORT}:5001'
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    volumes:
+      - "./config/jag/site_config.yml:/app/configs/site_config.yml:ro"
+      - "./config/jag/stream_config.yml:/app/configs/stream_config.yml:ro"
+      - "./config/jag/uwsgi.ini:/app/uwsgi.ini:ro"
+      - "./config/jag/entrypoint.sh:/app/scripts/entrypoint.sh"
+      - "./jag/app:/app"
+      - "./jag/wsgi.py:/wsgi.py"
+      - "/app/static/node_modules"
+    command: sh scripts/entrypoint.sh
+
+  jaguar_postgres:
+    image: postgres:latest
+    restart: on-failure:3
+    environment:
+      POSTGRES_PASSWORD: ${JAG_POSTGRES_PASSWORD}
+      POSTGRES_USER: ${JAG_POSTGRES_USER}
+      POSTGRES_DB: ${JAG_POSTGRES_DB}
+    networks:
+      cheetah-net:
+        ipv4_address: 10.11.0.5
+    ports:
+      - "5023:5432"
+    volumes:
+      - jaguar_pg_data:/var/lib/postgresql/data
+
+  nginx-rtmp:
+    # nginx rtmp server
+    image: zomstream-nginx-rtmp:latest
+    restart: no
+    networks:
+      cheetah-net:
+        ipv4_address: 10.11.0.3
+      proxy-network:
+        ipv4_address: 10.5.0.11
+    ports:
+      - "1935:1935"
+      # if there is no proxy in front of this set your frontend port here
+      # if you arYou thinke using traefik instead set the configuration labels below
+      - "9000:8080"
+    volumes:
+      - "./config/nginx-rtmp:/usr/local/nginx/conf:ro"
+      - "./rec:/video/rec"
+      - "./recunlisted:/video/recunlisted"
+    #  - ".docker-nginx-rtmp:/opt/nginx"
+
+    depends_on:
+      - auth
+      - jag
+
+volumes:
+  jaguar_pg_data:
+    name: "jaguar"

@@ -1,0 +1,96 @@
+{% extends "base.html.j2" %}
+{% block title %} Player- {{ appname }}: {{ streamname }}  {%	endblock title %}
+{% block content %}
+
+<div id="videocontainer">
+    <h1>{{ streamname }}</h1>
+    <video id="player" controls>
+    </video>
+</div>
+
+<main>
+    <article>
+        <h1>URLs</h1>
+         <button onclick="playVideo()">Play Video</button>
+        <table>
+        <tbody>
+            <tr>
+                <th>Protocol</th>
+                <th>URL</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr>
+                <td>RTMP</td>
+                <td>
+                    <input 
+                        type="text" class="url" 
+                        id="rtmp" 
+                        value="rtmp://{{ configuration["rtmp_base"] }}/{{ appname }}/{{ streamname }}">
+                </td>
+                <td class="btn">
+                    <button class="btn" onclick="copy_to_clipboard('rtmp')">Copy</button>
+                </td>
+                <td class="btn">
+                    <a 
+                        style="width: 80px;"
+                        href="rtmp://{{ configuration["rtmp_base"] }}/{{ appname }}/{{ streamname }}" 
+                        class="btn btn-green">
+                            &#9654; RTMP
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>HTTP-FLV</td>
+                <td>
+                    <input 
+                        type="text" class="url" 
+                        id="flv"
+                        value="{{ configuration["web_proto"] }}://{{ configuration["base_url"] }}/flv?app={{ appname }}&stream={{ streamname }}">
+                </td>
+                <td class="btn">
+                    <button class="btn" onclick="copy_to_clipboard('flv')">Copy</button>
+                </td>
+                <td class="btn">
+                    <a 
+                        style="width: 80px;"
+                        href="{{ configuration["web_proto"] }}://{{ configuration["base_url"] }}/flv?app={{ appname }}&stream={{ streamname }}"
+                        class="btn btn-green">
+                            &#9654; HTTP-FLV
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </article>
+</main>
+
+<script src="{{ url_for('static', filename='flv.js') }}"></script>
+<script type="application/javascript">
+
+    var flvPlayer; // Declare flvPlayer globally
+    if (flvjs.isSupported()) {
+        var videoElement = document.getElementById('player');
+        flvPlayer = flvjs.createPlayer({
+            type: 'flv',
+            url: '{{ configuration["web_proto"] }}://{{ configuration["base_url"] }}/flv?app={{ appname }}&stream={{ streamname }}'
+        });
+        flvPlayer.attachMediaElement(videoElement);
+        flvPlayer.load();
+    }
+
+    function playVideo() {
+        if (flvPlayer) {
+            flvPlayer.play().catch(e => console.error('Error starting playback:', e));
+        }
+    }
+
+    function copy_to_clipboard(elem) {
+        var textfield = document.getElementById(elem);
+        textfield.select();
+        navigator.clipboard.writeText(textfield.value);
+    }
+
+</script>
+
+{% endblock content %}

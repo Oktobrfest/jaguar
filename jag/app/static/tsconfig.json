@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "outDir": "./scripts/dist/",
+    "sourceMap": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "ES2023",
+    "lib": [
+      "ES2023",
+      "webworker",
+      "dom"
+    ],
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "./scripts/**/*"
+  ]
+}

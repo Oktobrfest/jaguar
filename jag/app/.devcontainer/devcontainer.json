@@ -1,0 +1,20 @@
+{
+    "name": "Python Development Container",
+    "dockerComposeFile": "../../docker-compose.yml",
+    "service": "jag",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python"
+            ]
+        }
+    },
+    "workspaceFolder": "/app",
+    "runArgs": [
+        "--user",
+        "z"
+    ],
+    "remoteUser": "z",
+    "containerUser": "z",
+    "privileged": false
+}

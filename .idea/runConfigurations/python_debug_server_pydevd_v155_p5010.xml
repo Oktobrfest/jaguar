@@ -1,0 +1,17 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="python-debug-server-pydevd-v155-p5010" type="PyRemoteDebugConfigurationType" factoryName="Python Remote Debug" singleton="false">
+    <module name="cheetah" />
+    <option name="PORT" value="5010" />
+    <option name="HOST" value="host.docker.internal" />
+    <PathMappingSettings>
+      <option name="pathMappings">
+        <list>
+          <mapping local-root="$PROJECT_DIR$/jag/app" remote-root="/app" />
+        </list>
+      </option>
+    </PathMappingSettings>
+    <option name="REDIRECT_OUTPUT" value="true" />
+    <option name="SUSPEND_AFTER_CONNECT" value="false" />
+    <method v="2" />
+  </configuration>
+</component>

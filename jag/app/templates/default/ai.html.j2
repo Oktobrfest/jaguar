@@ -1,0 +1,55 @@
+{% extends "base.html.j2" %}
+{% block title %} AI- API {% endblock title %}
+{% block content %}
+
+<div id="react-root-ai"></div>
+<div id="capture-form-container"></div>
+
+<div id="action-buttons">
+    <button class="button" type="button" onclick="doAllSteps()">Do All Steps</button>
+
+    <form id="ocrForm" enctype="multipart/form-data">
+        <button class="button" type="button" onclick="doOcr()">Do OCR</button>
+    </form>
+
+    <button class="button" id="submit-ocr-text-button" type="button" onclick="submitOcr()">Submit OCR to AI</button>
+    <form id="get-answer">
+        <button class="button" id="get-answer-button" type="button" onclick="getAnswer()">Get ANSWER!</button>
+    </form>
+</div>
+
+<main>
+    <div id="ai-answer-section">
+        <h3>GPT- Answer:</h3>
+        <p id="ai_answer"></p>
+    </div>
+
+    <div id="ai-clean_question">
+        <h3>GPT Cleaned:</h3>
+        <p id="extracted_question"></p>
+        <p class="UNUSED" id="extracted_a_section"></p>
+    </div>
+
+    <div id="ocr-stuff">
+          <form id="submit-ocr-text-form" enctype="multipart/form-data">
+            <div id="ocrResults">
+                <h3>OCR Results:</h3>
+                <p id="ocrText"></p>
+            </div>
+
+            <div id="topics-area">
+                <label for="topics-input-form-field">Topics:</label>
+                <input id="topics-input-form-field" type="text" pattern="[a-z0-9_]+" name="topics-input-form-field"
+                       placeholder="list topics here... fishing, cooking, etc."
+																							title="Topics"
+                       default="Engineering, ">
+                <br>
+            </div>
+
+        </form>
+    </div>
+
+</main>
+
+
+{% endblock content %}

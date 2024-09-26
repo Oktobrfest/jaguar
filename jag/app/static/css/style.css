@@ -1,0 +1,147 @@
+  .navbar-nav {
+    margin-left: 100px;
+  }
+
+.my-custom-bullet {
+    background-color: blue;  /* Example background color */
+    width: 12px;             /* Example width */
+    height: 12px;            /* Example height */
+    border-radius: 50%;      /* Makes the bullet circular */
+    margin: 4px;
+}
+
+/* Container styling to center everything nicely */
+.form-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Style the form to display its children inline */
+.form-inline {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adds space between form elements */
+}
+
+/* Input field styling */
+.input-field {
+    flex-grow: 1; /* Allows the input field to take up available space */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Label styling for better alignment and styling */
+.label {
+    margin-right: 10px;
+}
+
+/* Button styling */
+.button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 4px #999; /* Add a shadow for the raised effect */
+  transition: box-shadow 0.2s;
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+.button:active {
+  box-shadow: 0 2px #666;
+  transform: translateY(2px);
+}
+
+#cropper {
+    position: 'absolute';
+    top: 0;
+    left: 0;
+    width: '100%';
+    height: '100%';
+    zIndex: 10;
+}
+
+.light {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 20px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.5);
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
+}
+
+.capture-form-container {
+    float: left;
+    margin-left: 10px;
+    display: flex;
+    flex-flow: nowrap;
+    flex-direction: row;
+    max-width: 600px;
+}
+
+/*.rtmp-url-form {*/
+/*    max-width: 40px;*/
+/*}*/
+#action-buttons {
+    display: flex;
+    align-items: center; /* Align vertically */
+    flex-wrap: nowrap;   /* Prevent wrapping */
+    gap: 2px;           /* Space between buttons and forms */
+    flex-direction: row;
+    float: right;
+}
+
+.form-inline, #ocrForm, #get-answer, .capture-form-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.input-field, .button {
+    font-size: 14px;
+}
+
+.label {
+    margin-right: 5px;   /* Space between label and input */
+}
+
+#ai-answer-container {
+    display: flex;             /* Establishes a flex container */
+    flex-direction: row;       /* Aligns children in a horizontal row */
+    justify-content: space-around; /* Distributes extra space around items */
+    align-items: flex-start;   /* Aligns items to the start of the flex container vertically */
+}
+
+.answer-set {
+    flex: 1;
+    margin: 10px;
+    border: 1px solid #ccc;
+    padding: 1em;
+}
+
+.title-and-only-answer {
+    display: flex;             /* Makes this div a flex container */
+    align-items: center;       /* Vertically aligns the items in the container */
+    margin-bottom: 10px;       /* Adds some space between this section and the ones below it */
+}
+
+.title-and-only-answer > h4 {
+    margin-right: 1em;        /* Adds space between the title and the ONLY ANSWER */
+    white-space: nowrap;       /* Ensures the title is on a single line */
+}
+

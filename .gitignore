@@ -1,0 +1,118 @@
+*.mkv
+*.mp4
+*.mp3
+
+*.key
+
+# Nginx
+logs/error.log
+logs/access.log
+
+# General
+*.log
+*.csv
+*.dat
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.flaskenv
+*.env
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.pycapp
+*.pyz
+*.egg
+*.egg-info/
+*.swp
+
+# Virtual Environments
+venv/
+.env/
+.venv/
+
+# Docker
+.dockerignore
+
+# IDEs and Editors
+*.sublime-project
+*.sublime-workspace
+
+# Test and Coverage Reports
+.pytest_cache/
+.cache/
+.coverage
+.coverage.*
+.tox/
+
+# Image files
+*.svg
+*.pdf
+*.jpg
+*.png
+*.bmp
+*.img
+
+# Lock files
+*.lock
+
+# Libraries
+flv.js
+
+# Documentation
+docs/_build/
+
+# Exclude samples dir
+samples/
+*-stack.yml
+backup/
+
+logs/
+*.tar.gz
+.dump
+logs
+
+pdfjs-dist/
+locale/
+LICENSE.txt
+screenshots/
+
+**/static/css/images/
+
+# Node
+/node_modules/
+.npm/
+.yarn/
+**/node_modules
+**/npm-debug.log
+
+# Build and Distribution
+/dist/
+/build/
+/htmlcov/
+/coverage/
+*.cover
+
+# React-related compiled files and Webpack
+static/scripts/dist/
+*.map
+build
+**/dist/bundle.js
+**/scripts/dist
+
+# My Specific Files
+/jag/config.yml
+**jag/app/seed_db.py
+**.env.prompts
+site_config.yml
+stream_config.yml
+/notes.txt
+*g_api_key.json
+**/rec
+**/recunlisted
+**/stoked-axle-*.json

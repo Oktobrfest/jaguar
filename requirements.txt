@@ -1,0 +1,21 @@
+flask
+pyyaml
+uwsgi
+ffmpeg-python
+langchain
+pytesseract
+openai
+langchain-openai
+langchain_community
+google-cloud-vision
+vertexai
+google-cloud-aiplatform
+langchain-google-vertexai
+# Flask-JSGlue
+# flask-util-js
+MarkupSafe
+openai[datalib]
+python-dotenv
+SQLAlchemy
+psycopg2-binary
+Flask-Login

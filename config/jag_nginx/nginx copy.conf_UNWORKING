@@ -1,0 +1,31 @@
+# user  nginx;  # or nobody
+# worker_processes  auto;
+
+daemon off;
+error_log /dev/stdout error;
+rtmp_auto_push on;
+
+error_log /var/log/nginx/error.log debug;
+
+events {
+        worker_connections 1024;
+}
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  /var/log/nginx/access.log  main;
+    access_log /dev/stdout;
+
+    sendfile        on;
+    keepalive_timeout  65;
+
+    include /usr/local/nginx/conf/conf.d/*.conf;
+}
+
+include /usr/local/nginx/conf/rtmp/*.conf;
